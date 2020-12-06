@@ -16,6 +16,7 @@ export const InputBlock = styled.div`
 
     svg {
         margin-right: 16px;
+        color: #666360;
     }
 
     input {
