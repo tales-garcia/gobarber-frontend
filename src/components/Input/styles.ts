@@ -10,6 +10,7 @@ export const InputBlock = styled.div<InputBlockProps>`
     border: 2px solid #232129;
     padding: 16px;
     width: 100%;
+    color: ${props => props.isFilled ? '#ff9000' : '#666360'};
 
     display: flex;
     align-items: center;
@@ -20,15 +21,11 @@ export const InputBlock = styled.div<InputBlockProps>`
 
     &:focus-within {
         border: 2px solid #ff9000;
-
-        svg {
-            color: #ff9000;
-        }
+        color: #ff9000;
     }
 
     svg {
         margin-right: 16px;
-        color: ${props => props.isFilled ? '#ff9000' : '#666360'};
     }
 
     input {
