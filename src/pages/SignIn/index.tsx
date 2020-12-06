@@ -20,28 +20,34 @@ const SignIn : React.FC = () => {
                     onSubmit={handleSubmit}
                     initialValues={{ email: '', password: '' }}
                 >
-                    <Form>
-                        <h1>Faça seu logon</h1>
+                    {({ errors, touched }) => (
+                        <Form>
+                            <h1>Faça seu logon</h1>
 
-                        <Input
-                            Icon={FiMail}
-                            iconSize={16}
-                            name="email"
-                            placeholder="E-mail"
-                        />
-                        
-                        <Input
-                            Icon={FiLock}
-                            iconSize={16}
-                            name="password"
-                            type="password"
-                            placeholder="Senha"
-                        />
+                            <Input
+                                Icon={FiMail}
+                                iconSize={16}
+                                name="email"
+                                placeholder="E-mail"
+                                errors={errors}
+                                touched={touched}
+                            />
+                            
+                            <Input
+                                Icon={FiLock}
+                                iconSize={16}
+                                name="password"
+                                type="password"
+                                placeholder="Senha"
+                                errors={errors}
+                                touched={touched}
+                            />
 
-                        <Button type="submit">Entrar</Button>
+                            <Button type="submit">Entrar</Button>
 
-                        <a href="forgot">Esqueci minha senha</a>
-                    </Form>
+                            <a href="forgot">Esqueci minha senha</a>
+                        </Form>
+                    )}
                 </Formik>
 
                 <a href="/">
