@@ -5,6 +5,12 @@ import { FiLogIn, FiLock, FiMail } from 'react-icons/fi';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
+import * as Yup from 'yup';
+
+const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Email inválido').required('Email obrigatório'),
+    password: Yup.string().min(5, 'Mínimo de 5 caracteres').required('Senha obrigatória')
+});
 
 const SignIn : React.FC = () => {
 
@@ -19,6 +25,7 @@ const SignIn : React.FC = () => {
                 <Formik
                     onSubmit={handleSubmit}
                     initialValues={{ email: '', password: '' }}
+                    validationSchema={validationSchema}
                 >
                     {({ errors, touched }) => (
                         <Form>

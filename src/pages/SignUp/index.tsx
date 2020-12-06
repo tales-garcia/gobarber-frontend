@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 const validateSchema = Yup.object().shape({
     name: Yup.string().required('Nome obrigatório'),
     email: Yup.string().email('Email inválido').required('Email obrigatório'),
-    password: Yup.string().min(5, 'Mínimo de 5 caractéres').required('Senha obrigatória')
+    password: Yup.string().min(5, 'Mínimo de 5 caracteres').required('Senha obrigatória')
 });
 
 interface FormInputs {
