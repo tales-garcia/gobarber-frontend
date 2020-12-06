@@ -22,19 +22,20 @@ const SignUp : React.FC = () => {
                 <Formik
                     onSubmit={handleSubmit}
                     initialValues={{ name: '', email: '', password: '' }}
+                    
                 >
                     <Form>
                         <h1>Faça seu logon</h1>
 
                         <Input
-                            icon={FiUser}
+                            Icon={FiUser}
                             iconSize={16}
                             name="name"
                             placeholder="Nome"
                         />
 
                         <Input
-                            icon={FiMail}
+                            Icon={FiMail}
                             iconSize={16}
                             name="email"
                             type="email"
@@ -42,7 +43,7 @@ const SignUp : React.FC = () => {
                         />
                         
                         <Input
-                            icon={FiLock}
+                            Icon={FiLock}
                             iconSize={16}
                             name="password"
                             type="password"

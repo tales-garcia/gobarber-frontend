@@ -24,14 +24,14 @@ const SignIn : React.FC = () => {
                         <h1>Faça seu logon</h1>
 
                         <Input
-                            icon={FiMail}
+                            Icon={FiMail}
                             iconSize={16}
                             name="email"
                             placeholder="E-mail"
                         />
                         
                         <Input
-                            icon={FiLock}
+                            Icon={FiLock}
                             iconSize={16}
                             name="password"
                             type="password"
