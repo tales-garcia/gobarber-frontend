@@ -1,7 +1,8 @@
 import { Field, FormikErrors, FormikTouched } from 'formik';
 import React, { InputHTMLAttributes, useCallback, useRef, useState } from 'react';
 import { IconBaseProps } from 'react-icons';
-import { InputBlock } from './styles';
+import { FiAlertCircle } from 'react-icons/fi';
+import { InputBlock, Error } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     name: string;
@@ -19,13 +20,14 @@ const Input: React.FC<InputProps> = ({ Icon, iconSize, errors, touched, name, ..
     let inputRef = useRef<HTMLInputElement>(null);
 
     const [isFilled, setIsFilled] = useState(false);
+    const hasError = !!errors[name] && !!touched[name];
 
     const handleInputBlur = useCallback(() => {
         setIsFilled(!!inputRef.current?.value);
     }, []);
 
     return (
-        <InputBlock isFilled={isFilled}>
+        <InputBlock hasError={hasError} isFilled={isFilled}>
             {Icon && <Icon size={iconSize || 16} />}
             <Field
                 innerRef={inputRef}
@@ -33,7 +35,11 @@ const Input: React.FC<InputProps> = ({ Icon, iconSize, errors, touched, name, ..
                 {...rest}
                 onBlur={handleInputBlur}
             />
-            {errors[name] && touched[name] ? errors[name] : null}
+            {hasError && (
+                <Error title={errors[name] || ''}>
+                    <FiAlertCircle color="#c53030" size={20} />
+                </Error>
+            )}
         </InputBlock>
     )
 }
