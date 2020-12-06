@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Background, Container, Content } from './styles';
 import logoSvg from '../../assets/logo-gobarber.svg';
 import { FiLock, FiMail, FiUser, FiArrowLeft } from 'react-icons/fi';
@@ -9,9 +9,9 @@ import { Form, Formik, FormikValues } from 'formik';
 const SignUp : React.FC = () => {
 
 
-    function handleSubmit(values: FormikValues) {
+    const handleSubmit = useCallback((values: FormikValues) => {
         alert(JSON.stringify(values));
-    }
+    }, []);
 
     return (
         <Container>
