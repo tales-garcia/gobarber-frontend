@@ -8,14 +8,29 @@ interface SignInCredentials {
     password: string;
 }
 
+interface AuthState {
+    token: string;
+    user: object;
+}
+
 interface AuthContextData {
-    name: string;
+    user: object;
     signIn(credentials: SignInCredentials): Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider : React.FC = ({ children }) => {
+    const [data, setData] = useState<AuthState>(() => {
+        const user = localStorage.getItem('@gobarber:user');
+        const token = localStorage.getItem('@gobarber:token');
+
+        if(!user || !token) return {} as AuthState;
+
+        const parsedUser = JSON.parse(user) as object;
+
+        return { user: parsedUser, token };
+    });
 
     const signIn = useCallback(async ({ email, password } : SignInCredentials) => {
         const res = await api.post('sessions', {
@@ -28,10 +43,11 @@ export const AuthProvider : React.FC = ({ children }) => {
         localStorage.setItem('@gobarber:token', token);
         localStorage.setItem('@gobarber:user', JSON.stringify(user));
 
+        setData({ user, token });
     }, []);
 
     return (
-        <AuthContext.Provider  value={{ name: 'Tales', signIn }}>
+        <AuthContext.Provider value={{ user: data.user, signIn }}>
             { children }
         </AuthContext.Provider>
     );
