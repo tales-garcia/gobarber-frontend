@@ -6,17 +6,28 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { useAuth } from '../../contexts/auth';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Email obrigatório'),
     password: Yup.string().min(5, 'Mínimo de 5 caracteres').required('Senha obrigatória')
 });
 
+interface SignInFormData {
+    email: string;
+    password: string;
+}
+
 const SignIn : React.FC = () => {
 
-    const handleSubmit = useCallback(values => {
-        console.log(values);
-    }, [])
+    const { signIn } = useAuth();
+
+    const handleSubmit = useCallback(({ email, password } : SignInFormData) => {
+        signIn({
+            email,
+            password
+        });
+    }, [signIn]);
 
     return (
         <Container>
