@@ -1,4 +1,5 @@
 import React from 'react';
+import ToastContainer from './components/ToastContainer';
 import { AuthProvider } from './contexts/auth';
 import SignIn from './pages/SignIn';
 import GlobalStyle from './styles/global';
@@ -9,6 +10,9 @@ function App() {
       <AuthProvider>
         <SignIn />
       </AuthProvider>
+
+      <ToastContainer />
+
       <GlobalStyle />
     </>
   );
