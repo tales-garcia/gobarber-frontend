@@ -22,11 +22,15 @@ const SignIn : React.FC = () => {
 
     const { signIn } = useAuth();
 
-    const handleSubmit = useCallback(({ email, password } : SignInFormData) => {
-        signIn({
-            email,
-            password
-        });
+    const handleSubmit = useCallback(async ({ email, password } : SignInFormData) => {
+        try {
+            await signIn({
+                email,
+                password
+            });
+        } catch(e) {
+            alert(e.message);
+        }
     }, [signIn]);
 
     return (
