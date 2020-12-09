@@ -6,7 +6,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../hooks/auth';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Email obrigatório'),
