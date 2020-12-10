@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toast';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Email obrigatório'),
@@ -21,6 +22,7 @@ interface SignInFormData {
 const SignIn : React.FC = () => {
 
     const { signIn } = useAuth();
+    const { createToast } = useToast();
 
     const handleSubmit = useCallback(async ({ email, password } : SignInFormData) => {
         try {
@@ -29,9 +31,13 @@ const SignIn : React.FC = () => {
                 password
             });
         } catch(e) {
-            alert(e.message);
+            createToast({
+                title: 'Ocorreu um erro',
+                description: 'Não foi possível realizar login na aplicação',
+                type: 'error'
+            });
         }
-    }, [signIn]);
+    }, [createToast, signIn]);
 
     return (
         <Container>

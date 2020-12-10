@@ -1,46 +1,38 @@
 import React from 'react';
 import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
+import { useToast } from '../../hooks/toast';
 import { Container, Toast } from './styles';
 
-const ToastContainer: React.FC = () => {
+interface ToastData {
+    id: string;
+    type?: 'success' | 'info' | 'error';
+    title: string;
+    description?: string;
+}
+
+interface ToastContainerProps {
+    toasts: ToastData[];
+}
+
+const ToastContainer: React.FC<ToastContainerProps> = ({ toasts }) => {
+    const { removeToast } = useToast();
+
     return (
         <Container>
-            <Toast hasDescription type="error">
-                <FiAlertCircle size={20} />
+            {toasts.map(toast => (
+                <Toast key={toast.id} hasDescription={!!toast.description} type={toast.type}>
+                    <FiAlertCircle size={20} />
 
-                <div>
-                    <strong>Occoreu um erro</strong>
-                    <p>Não foi possível realizar login na aplicação</p>
-                </div>
+                    <div>
+                        <strong>{toast.title}</strong>
+                        {toast.description && <p>{toast.description}</p>}
+                    </div>
 
-                <button type="button">
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
-            <Toast hasDescription={false} type="info">
-                <FiAlertCircle size={20} />
-
-                <div>
-                    <strong>Occoreu um erro</strong>
-                    
-                </div>
-
-                <button type="button">
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
-            <Toast hasDescription={false} type="success">
-                <FiAlertCircle size={20} />
-
-                <div>
-                    <strong>Occoreu um erro</strong>
-                    
-                </div>
-
-                <button type="button">
-                    <FiXCircle size={18} />
-                </button>
-            </Toast>
+                    <button onClick={() => removeToast(toast.id)} type="button">
+                        <FiXCircle size={18} />
+                    </button>
+                </Toast>
+            ))}
         </Container>
     )
 }
