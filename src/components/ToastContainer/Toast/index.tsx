@@ -12,6 +12,7 @@ interface ToastData {
 
 interface ToastProps {
     toast: ToastData;
+    style: object;
 }
 
 const Icons = {
@@ -20,7 +21,7 @@ const Icons = {
     success: <FiCheckCircle size={24} />
 };
 
-const Toast: React.FC<ToastProps> = ({ toast }) => {
+const Toast: React.FC<ToastProps> = ({ toast, style }) => {
     const { removeToast } = useToast();
 
     useEffect(() => {
@@ -30,7 +31,12 @@ const Toast: React.FC<ToastProps> = ({ toast }) => {
     }, [removeToast, toast.id]);
 
     return (
-        <Container key={toast.id} hasDescription={!!toast.description} type={toast.type}>
+        <Container
+            key={toast.id}
+            hasDescription={!!toast.description}
+            type={toast.type}
+            style={style}
+        >
             {Icons[toast.type || 'info']}
 
             <div>
