@@ -8,6 +8,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
+import { Link } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Email inválido').required('Email obrigatório'),
@@ -73,15 +74,15 @@ const SignIn : React.FC = () => {
 
                             <Button type="submit">Entrar</Button>
 
-                            <a href="forgot">Esqueci minha senha</a>
+                            <Link to="/forgot">Esqueci minha senha</Link>
                         </Form>
                     )}
                 </Formik>
 
-                <a href="/">
+                <Link to="/signup">
                     <FiLogIn />
                     Criar conta
-                </a>
+                </Link>
             </Content>
             <Background />
         </Container>

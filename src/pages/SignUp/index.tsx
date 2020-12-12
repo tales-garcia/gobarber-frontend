@@ -6,6 +6,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 
 const validateSchema = Yup.object().shape({
     name: Yup.string().required('Nome obrigatório'),
@@ -73,10 +74,10 @@ const SignUp : React.FC = () => {
                     )}
                 </Formik>
 
-                <a href="/">
+                <Link to="/">
                     <FiArrowLeft />
                     Voltar para o login
-                </a>
+                </Link>
             </Content>
         </Container>
     );
