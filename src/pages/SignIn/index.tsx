@@ -31,6 +31,11 @@ const SignIn : React.FC = () => {
                 email,
                 password
             });
+
+            createToast({
+                title: 'Conta criada com sucesso!',
+                type: 'success'
+            });
         } catch(e) {
             createToast({
                 title: 'Ocorreu um erro',

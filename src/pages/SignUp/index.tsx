@@ -6,7 +6,9 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import api from '../../services/api';
+import { useToast } from '../../hooks/toast';
 
 const validateSchema = Yup.object().shape({
     name: Yup.string().required('Nome obrigatório'),
@@ -21,10 +23,27 @@ interface FormInputs {
 }
 
 const SignUp : React.FC = () => {
+    const { createToast } = useToast();
+    const history = useHistory();
 
-    const handleSubmit = useCallback((values: FormInputs) => {
-        alert(JSON.stringify(values));
-    }, []);
+    const handleSubmit = useCallback(async (values: FormInputs) => {
+        try {
+            await api.post('/users', values);
+
+            createToast({
+                title: 'Conta criada com sucesso!',
+                type: 'success'
+            });
+
+            history.push('/');
+        } catch(e) {
+            createToast({
+                title: 'Ocorreu um erro',
+                description: 'Não foi possível criar uma nove conta na aplicação',
+                type: 'error'
+            });
+        }
+    }, [createToast, history]);
 
     return (
         <Container>
