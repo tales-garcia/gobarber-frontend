@@ -1,14 +1,14 @@
 import React from 'react';
 
 import AppProvider from './hooks';
-import SignIn from './pages/SignIn';
+import Routes from './routes/index.routes';
 import GlobalStyle from './styles/global';
 
 function App() {
   return (
     <>
       <AppProvider>
-        <SignIn />
+        <Routes />
       </AppProvider>
 
       <GlobalStyle />
