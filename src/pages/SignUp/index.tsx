@@ -58,41 +58,33 @@ const SignUp : React.FC = () => {
                         initialValues={{ name: '', email: '', password: '' }}
                         validationSchema={validateSchema}
                     >
-                        {({ errors, touched }) => (
-                            <Form>
-                                <h1>Faça seu logon</h1>
+                        <Form>
+                            <h1>Faça seu logon</h1>
 
-                                <Input
-                                    Icon={FiUser}
-                                    iconSize={16}
-                                    name="name"
-                                    placeholder="Nome"
-                                    errors={errors}
-                                    touched={touched}
-                                />
+                            <Input
+                                Icon={FiUser}
+                                iconSize={16}
+                                name="name"
+                                placeholder="Nome"
+                            />
 
-                                <Input
-                                    Icon={FiMail}
-                                    iconSize={16}
-                                    name="email"
-                                    placeholder="E-mail"
-                                    errors={errors}
-                                    touched={touched}
-                                />
+                            <Input
+                                Icon={FiMail}
+                                iconSize={16}
+                                name="email"
+                                placeholder="E-mail"
+                            />
 
-                                <Input
-                                    Icon={FiLock}
-                                    iconSize={16}
-                                    name="password"
-                                    type="password"
-                                    placeholder="Senha"
-                                    errors={errors}
-                                    touched={touched}
-                                />
+                            <Input
+                                Icon={FiLock}
+                                iconSize={16}
+                                name="password"
+                                type="password"
+                                placeholder="Senha"
+                            />
 
-                                <Button type="submit">Entrar</Button>
-                            </Form>
-                        )}
+                            <Button type="submit">Entrar</Button>
+                        </Form>
                     </Formik>
 
                     <Link to="/">

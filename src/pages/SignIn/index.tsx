@@ -49,41 +49,35 @@ const SignIn : React.FC = () => {
         <Container>
             <Content>
                 <AnimatedContent>
-                    
+
                     <img src={logoSvg} alt="Gobarber logo"/>
                     <Formik
                         onSubmit={handleSubmit}
                         initialValues={{ email: '', password: '' }}
                         validationSchema={validationSchema}
                     >
-                        {({ errors, touched }) => (
-                            <Form>
-                                <h1>Faça seu logon</h1>
+                        <Form>
+                            <h1>Faça seu logon</h1>
 
-                                <Input
-                                    Icon={FiMail}
-                                    iconSize={16}
-                                    name="email"
-                                    placeholder="E-mail"
-                                    errors={errors}
-                                    touched={touched}
-                                />
-                                
-                                <Input
-                                    Icon={FiLock}
-                                    iconSize={16}
-                                    name="password"
-                                    type="password"
-                                    placeholder="Senha"
-                                    errors={errors}
-                                    touched={touched}
-                                />
+                            <Input
+                                Icon={FiMail}
+                                iconSize={16}
+                                name="email"
+                                placeholder="E-mail"
+                            />
 
-                                <Button type="submit">Entrar</Button>
+                            <Input
+                                Icon={FiLock}
+                                iconSize={16}
+                                name="password"
+                                type="password"
+                                placeholder="Senha"
+                            />
 
-                                <Link to="/forgot">Esqueci minha senha</Link>
-                            </Form>
-                        )}
+                            <Button type="submit">Entrar</Button>
+
+                            <Link to="/forgot">Esqueci minha senha</Link>
+                        </Form>
                     </Formik>
 
                     <Link to="/signup">
