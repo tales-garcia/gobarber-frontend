@@ -43,7 +43,7 @@ const ResetPassword : React.FC = () => {
                 type: 'error'
             });
         }
-    }, [createToast]);
+    }, [createToast, history, token]);
 
     return (
         <Container>
