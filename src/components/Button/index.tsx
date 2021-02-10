@@ -4,9 +4,9 @@ import { Container } from './styles';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button : React.FC<ButtonProps> = ({children, ...rest}) => {
+const Button : React.FC<ButtonProps> = ({children, disabled, ...rest}) => {
     const { isSubmitting } = useFormikContext();
-    return (<Container type="button" {...rest}>{isSubmitting ? 'Enviando...' : children}</Container>)
+    return (<Container disabled={isSubmitting || disabled} type="button" {...rest}>{isSubmitting ? 'Enviando...' : children}</Container>)
 };
 
 export default Button;
