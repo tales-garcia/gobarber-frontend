@@ -33,7 +33,7 @@ const SignIn : React.FC = () => {
             });
 
             createToast({
-                title: 'Conta criada com sucesso!',
+                title: 'Logon realizado com sucesso!',
                 type: 'success'
             });
         } catch(e) {

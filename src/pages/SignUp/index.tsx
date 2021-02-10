@@ -39,7 +39,7 @@ const SignUp : React.FC = () => {
         } catch(e) {
             createToast({
                 title: 'Ocorreu um erro',
-                description: 'Não foi possível criar uma nove conta na aplicação',
+                description: 'Não foi possível criar uma nova conta na aplicação',
                 type: 'error'
             });
         }
@@ -59,7 +59,7 @@ const SignUp : React.FC = () => {
                         validationSchema={validateSchema}
                     >
                         <Form>
-                            <h1>Faça seu logon</h1>
+                            <h1>Cadastre-se</h1>
 
                             <Input
                                 Icon={FiUser}
