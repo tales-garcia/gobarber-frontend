@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Content, Schedule, Calendar, NextAppointment } from './styles';
+import { Container, Content, Schedule, Calendar, NextAppointment, Section } from './styles';
 import { FiClock } from 'react-icons/fi';
 import Header from '../../components/Header';
+import Appointment from '../../components/Appointment';
 
 const Dashboard = () => {
     return (
@@ -32,6 +33,16 @@ const Dashboard = () => {
                             </span>
                         </div>
                     </NextAppointment>
+
+                    <Section>
+                        <strong>Manhã</strong>
+                        <Appointment />
+                        <Appointment />
+                        <Appointment />
+                    </Section>
+                    <Section>
+                        <strong>Tarde</strong>
+                    </Section>
                 </Schedule>
                 <Calendar></Calendar>
             </Content>
