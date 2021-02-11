@@ -3,7 +3,7 @@ import { createContext } from "react";
 import api from '../services/api';
 
 interface IUser {
-    id: string;
+    _id: string;
     avatarUrl: string;
     name: string;
     email: string;
@@ -21,6 +21,7 @@ interface AuthState {
 
 interface AuthContextData {
     user: IUser;
+    token: string;
     signIn(credentials: SignInCredentials): Promise<void>;
     signOut(): void;
 }
@@ -69,7 +70,7 @@ export const AuthProvider : React.FC = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+        <AuthContext.Provider value={{ token: data.token, user: data.user, signIn, signOut }}>
             { children}
         </AuthContext.Provider>
     );
