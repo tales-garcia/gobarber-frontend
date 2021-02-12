@@ -51,6 +51,20 @@ const Dashboard = () => {
     }, [monthAvailability, currentMonth]);
 
     const weekDay = React.useMemo(() => ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][date.getDay()], [date]);
+    const month = React.useMemo(() => [
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro'
+    ][date.getMonth()], [date]);
     const isSelectedToday = React.useMemo(() => isToday(date), [date]);
 
     return (
@@ -61,7 +75,7 @@ const Dashboard = () => {
                     <h1>Horários agendados</h1>
                     <p>
                         {isSelectedToday && <span>Hoje</span>}
-                        <span>Dia {date.getDate()}</span>
+                        <span>Dia {date.getDate()} de {month}</span>
                         <span>{weekDay}</span>
                     </p>
 
