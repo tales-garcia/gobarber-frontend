@@ -7,17 +7,22 @@ import 'react-day-picker/lib/style.css';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
-import { isToday } from 'date-fns';
+import { format, isToday } from 'date-fns';
 
 interface IAvailability {
     available: boolean;
     day: number;
 }
 
+type Client = {
+    name: string;
+    avatarUrl: string;
+}
+
 interface IAppointment {
     _id: string;
     date: Date;
-    client: any;
+    client: Client;
 }
 
 const Dashboard = () => {
@@ -25,6 +30,7 @@ const Dashboard = () => {
     const [monthAvailability, setMonthAvailability] = React.useState<IAvailability[]>([]);
     const [currentMonth, setCurrentMonth] = React.useState(new Date());
     const [appointments, setAppointments] = React.useState<IAppointment[]>([]);
+    const [nextAppointment, setNextAppointment] = React.useState<IAppointment>({} as IAppointment);
     const { user } = useAuth();
 
     const handleDateChange = React.useCallback((date: Date, modifiers: DayModifiers) => {
@@ -41,6 +47,25 @@ const Dashboard = () => {
             }
         }).then(res => res.data).then(setMonthAvailability);
     }, [currentMonth]);
+
+    React.useEffect(() => {
+        api.get<IAppointment[]>(`/appointments/me`, {
+            params: {
+                year: new Date().getFullYear(),
+                month: new Date().getMonth(),
+                day: new Date().getDate()
+            }
+        })
+        .then(res => res.data)
+        .then(res => res.reduce((total, appointment) => {
+            if (!total._id) return appointment;
+
+            if (total.date.getHours() > appointment.date.getHours()) return appointment;
+
+            return total;
+        }, {} as IAppointment))
+        .then(setNextAppointment);
+    }, []);
 
     React.useEffect(() => {
         api.get(`/appointments/me`, {
@@ -83,8 +108,10 @@ const Dashboard = () => {
         'Dezembro'
     ][date.getMonth()], [date]);
     const isSelectedToday = React.useMemo(() => isToday(date), [date]);
-    const morningAppointments = React.useMemo(() => appointments.filter(appointment => appointment.date.getHours() < 12), [appointments]);
-    const afternoonAppointments = React.useMemo(() => appointments.filter(appointment => appointment.date.getHours() >= 12), [appointments]);
+
+    const nextAppointmentHour = React.useMemo(() => nextAppointment.date ? format(new Date(nextAppointment.date), "HH':'mm") : undefined, [nextAppointment]);
+    const morningAppointments = React.useMemo(() => appointments.filter(appointment => new Date(appointment.date).getHours() < 12), [appointments]);
+    const afternoonAppointments = React.useMemo(() => appointments.filter(appointment => new Date(appointment.date).getHours() >= 12), [appointments]);
 
     return (
         <Container>
@@ -97,23 +124,24 @@ const Dashboard = () => {
                         <span>Dia {date.getDate()} de {month}</span>
                         <span>{weekDay}</span>
                     </p>
+                    {nextAppointment.date && (
+                        <NextAppointment>
+                            <strong>Atendimento a seguir</strong>
+                            <div>
+                                <img
+                                    src={nextAppointment.client.avatarUrl}
+                                    alt={nextAppointment.client.name}
+                                />
 
-                    <NextAppointment>
-                        <strong>Atendimento a seguir</strong>
-                        <div>
-                            <img
-                                src="https://avatars.githubusercontent.com/u/58866268?s=460&u=fdafb8d175565604591f4fc4b1478ad0b2658b38&v=4"
-                                alt="Tales Garcia"
-                            />
+                                <strong>{nextAppointment.client.name}</strong>
 
-                            <strong>Tales Garcia</strong>
-
-                            <span>
-                                <FiClock />
-                                08:00
-                            </span>
-                        </div>
-                    </NextAppointment>
+                                <span>
+                                    <FiClock />
+                                    {nextAppointmentHour}
+                                </span>
+                            </div>
+                        </NextAppointment>
+                    )}
 
                     {!!morningAppointments.length && (
                         <Section>
