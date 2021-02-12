@@ -29,8 +29,8 @@ const Dashboard = () => {
     React.useEffect(() => {
         api.get(`/providers/${user._id}/availability/month`, {
             params: {
-                year: date.getFullYear(),
-                month: date.getMonth() + 1
+                year: currentMonth.getFullYear(),
+                month: currentMonth.getMonth() + 1
             }
         }).then(res => res.data).then(setMonthAvailability);
     }, [currentMonth]);
