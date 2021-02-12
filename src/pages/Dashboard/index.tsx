@@ -7,6 +7,7 @@ import 'react-day-picker/lib/style.css';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import api from '../../services/api';
 import { useAuth } from '../../hooks/auth';
+import { isToday } from 'date-fns';
 
 interface IAvailability {
     available: boolean;
@@ -17,7 +18,7 @@ const Dashboard = () => {
     const [date, setDate] = React.useState(new Date());
     const [monthAvailability, setMonthAvailability] = React.useState<IAvailability[]>([]);
     const [currentMonth, setCurrentMonth] = React.useState(new Date());
-    const { user, token } = useAuth();
+    const { user } = useAuth();
 
     const handleDateChange = React.useCallback((date: Date, modifiers: DayModifiers) => {
         if (modifiers.available) {
@@ -49,6 +50,9 @@ const Dashboard = () => {
             .map(availability => new Date(currentMonth.getFullYear(), currentMonth.getMonth(), availability.day));
     }, [monthAvailability, currentMonth]);
 
+    const weekDay = React.useMemo(() => ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][date.getDay()], [date]);
+    const isSelectedToday = React.useMemo(() => isToday(date), [date]);
+
     return (
         <Container>
             <Header />
@@ -56,9 +60,9 @@ const Dashboard = () => {
                 <Schedule>
                     <h1>Horários agendados</h1>
                     <p>
-                        <span>Hoje</span>
-                        <span>Dia 6</span>
-                        <span>Segunda-feira</span>
+                        {isSelectedToday && <span>Hoje</span>}
+                        <span>Dia {date.getDate()}</span>
+                        <span>{weekDay}</span>
                     </p>
 
                     <NextAppointment>
