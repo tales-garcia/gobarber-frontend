@@ -14,10 +14,17 @@ interface IAvailability {
     day: number;
 }
 
+interface IAppointment {
+    _id: string;
+    date: Date;
+    client: any;
+}
+
 const Dashboard = () => {
     const [date, setDate] = React.useState(new Date());
     const [monthAvailability, setMonthAvailability] = React.useState<IAvailability[]>([]);
     const [currentMonth, setCurrentMonth] = React.useState(new Date());
+    const [appointments, setAppointments] = React.useState<IAppointment[]>([]);
     const { user } = useAuth();
 
     const handleDateChange = React.useCallback((date: Date, modifiers: DayModifiers) => {
@@ -34,6 +41,16 @@ const Dashboard = () => {
             }
         }).then(res => res.data).then(setMonthAvailability);
     }, [currentMonth]);
+
+    React.useEffect(() => {
+        api.get(`/appointments/me`, {
+            params: {
+                year: date.getFullYear(),
+                month: date.getMonth(),
+                day: date.getDate()
+            }
+        }).then(res => res.data).then(setAppointments);
+    }, [date]);
 
     const handleMonthChange = React.useCallback(async (date: Date) => {
         setCurrentMonth(date);
@@ -66,6 +83,8 @@ const Dashboard = () => {
         'Dezembro'
     ][date.getMonth()], [date]);
     const isSelectedToday = React.useMemo(() => isToday(date), [date]);
+    const morningAppointments = React.useMemo(() => appointments.filter(appointment => appointment.date.getHours() < 12), [appointments]);
+    const afternoonAppointments = React.useMemo(() => appointments.filter(appointment => appointment.date.getHours() >= 12), [appointments]);
 
     return (
         <Container>
@@ -96,15 +115,18 @@ const Dashboard = () => {
                         </div>
                     </NextAppointment>
 
-                    <Section>
-                        <strong>Manhã</strong>
-                        <Appointment />
-                        <Appointment />
-                        <Appointment />
-                    </Section>
-                    <Section>
-                        <strong>Tarde</strong>
-                    </Section>
+                    {!!morningAppointments.length && (
+                        <Section>
+                            <strong>Manhã</strong>
+                            {morningAppointments.map(appointment => <Appointment key={appointment._id} data={appointment} />)}
+                        </Section>
+                    )}
+                    {!!afternoonAppointments.length && (
+                        <Section>
+                            <strong>Tarde</strong>
+                            {afternoonAppointments.map(appointment => <Appointment key={appointment._id} data={appointment} />)}
+                        </Section>
+                    )}
                 </Schedule>
                 <Calendar>
                     <DayPicker

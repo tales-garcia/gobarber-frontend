@@ -1,22 +1,39 @@
 import React from 'react';
 import { FiClock } from 'react-icons/fi';
+import { format } from 'date-fns';
 import { Container } from './styles';
 
-const Appointment = () => {
+interface IAppointmentProps {
+    data: IAppointment;
+}
+
+interface IAppointment {
+    date: Date;
+    client: IClient;
+}
+
+interface IClient {
+    avatarUrl: string;
+    name: string;
+}
+
+const Appointment: React.FC<IAppointmentProps> = ({ data: { date, client } }) => {
+    const hour = React.useMemo(() => format(new Date(date), "HH':'mm"), [date]);
+
     return (
         <Container>
             <span>
                 <FiClock />
-                08:00
+                {hour}
             </span>
 
             <div>
                 <img
-                    src="https://avatars.githubusercontent.com/u/58866268?s=460&u=fdafb8d175565604591f4fc4b1478ad0b2658b38&v=4"
-                    alt="Tales Garcia"
+                    src={client.avatarUrl}
+                    alt={client.name}
                 />
 
-                <strong>Tales Garcia</strong>
+                <strong>{client.name}</strong>
             </div>
         </Container>
     );
