@@ -45,6 +45,8 @@ export const AuthProvider : React.FC = ({ children }) => {
 
         const parsedUser = JSON.parse(user);
 
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+
         return { user: parsedUser, token };
     });
 
@@ -59,12 +61,16 @@ export const AuthProvider : React.FC = ({ children }) => {
         localStorage.setItem('@gobarber:token', token);
         localStorage.setItem('@gobarber:user', JSON.stringify(user));
 
+        api.defaults.headers.Authorization = `Bearer ${token}`;
+
         setData({ user, token });
     }, []);
 
     const signOut = useCallback(() => {
         localStorage.removeItem('@gobarber:token');
         localStorage.removeItem('@gobarber:user');
+
+        api.defaults.headers.Authorization = undefined;
 
         setData({} as AuthState);
     }, []);
