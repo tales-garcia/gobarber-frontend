@@ -3,6 +3,7 @@ import { Container, HeaderContent, Profile } from './styles';
 import logo from '../../assets/logo-gobarber.svg';
 import { useAuth } from '../../hooks/auth';
 import { FiPower } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const { signOut, user } = useAuth();
@@ -15,7 +16,7 @@ const Header = () => {
                     <img src={user.avatarUrl} alt={user.name} />
                     <div>
                         <span>Bem vindo,</span>
-                        <strong>{user.name}</strong>
+                        <Link to="/profile"><strong>{user.name}</strong></Link>
                     </div>
                 </Profile>
                 <button onClick={signOut} type="button">

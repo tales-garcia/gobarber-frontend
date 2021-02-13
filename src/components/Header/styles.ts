@@ -48,9 +48,18 @@ export const Profile = styled.section`
         span {
             color: #F4EDE8;
         }
+        > a {
+            text-decoration: none;
 
-        strong {
-            color: #ff9000;
+
+            > strong {
+                transition: opacity .4s;
+                color: #ff9000;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+            }
         }
     }
 `;
