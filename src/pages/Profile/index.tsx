@@ -7,7 +7,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import api from '../../services/api';
 
 const validationSchema = Yup.object().shape({
@@ -37,17 +37,34 @@ const validationSchema = Yup.object().shape({
 });
 
 interface ProfileFormData {
+    name: string;
     email: string;
+    oldPassword: string;
     password: string;
+    [key: string]: string;
 }
 
 const Profile: React.FC = () => {
 
     const { createToast } = useToast();
     const { user, updateUser } = useAuth();
+    const { push } = useHistory();
 
-    const handleSubmit = useCallback(async (_: ProfileFormData) => {
+    const handleSubmit = useCallback(async (values: ProfileFormData) => {
         try {
+            const data = {};
+            Object.keys(values).forEach(key => {
+                if (!!values[key] && key !== 'passwordConfirmation') {
+                    Object.assign(data, {
+                        [key]: values[key]
+                    });
+                }
+            });
+
+            const response = await api.patch('/profile', data);
+
+            updateUser(response.data);
+            push('/');
 
             createToast({
                 title: 'Alteração de dados realizada com sucesso!',
@@ -56,11 +73,11 @@ const Profile: React.FC = () => {
         } catch (e) {
             createToast({
                 title: 'Ocorreu um erro',
-                description: 'Não foi alterar seus dados na aplicação',
+                description: 'Não foi possível alterar seus dados na aplicação',
                 type: 'error'
             });
         }
-    }, [createToast]);
+    }, [createToast, updateUser, push]);
 
     const handleAvatarChange = React.useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
