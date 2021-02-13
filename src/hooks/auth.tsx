@@ -23,6 +23,7 @@ interface AuthContextData {
     user: IUser;
     signIn(credentials: SignInCredentials): Promise<void>;
     signOut(): void;
+    updateUser(user: Partial<IUser>): void;
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -65,6 +66,22 @@ export const AuthProvider : React.FC = ({ children }) => {
         setData({ user, token });
     }, []);
 
+    const updateUser = useCallback((user: Partial<IUser>) => {
+        localStorage.setItem('@gobarber:token', data.token);
+        localStorage.setItem('@gobarber:user', JSON.stringify({
+            ...data.user,
+            ...user
+        }));
+
+        setData(previousState => ({
+            token: previousState.token,
+            user: {
+                ...previousState.user,
+                ...user
+            }
+        }));
+    }, [setData, data]);
+
     const signOut = useCallback(() => {
         localStorage.removeItem('@gobarber:token');
         localStorage.removeItem('@gobarber:user');
@@ -75,7 +92,7 @@ export const AuthProvider : React.FC = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+        <AuthContext.Provider value={{ user: data.user, signIn, signOut, updateUser }}>
             { children}
         </AuthContext.Provider>
     );
