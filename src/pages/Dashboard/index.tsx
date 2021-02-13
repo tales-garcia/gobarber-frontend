@@ -46,7 +46,7 @@ const Dashboard = () => {
                 month: currentMonth.getMonth() + 1
             }
         }).then(res => res.data).then(setMonthAvailability);
-    }, [currentMonth]);
+    }, [currentMonth, user._id]);
 
     React.useEffect(() => {
         api.get<IAppointment[]>(`/appointments/me`, {
