@@ -57,6 +57,7 @@ const ForgotPassword: React.FC = () => {
                                 Icon={FiMail}
                                 iconSize={16}
                                 name="email"
+                                autoComplete="email"
                                 placeholder="E-mail"
                             />
 

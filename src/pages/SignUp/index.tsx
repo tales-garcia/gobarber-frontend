@@ -65,6 +65,7 @@ const SignUp : React.FC = () => {
                                 Icon={FiUser}
                                 iconSize={16}
                                 name="name"
+                                autoComplete="name"
                                 placeholder="Nome"
                             />
 
@@ -72,6 +73,7 @@ const SignUp : React.FC = () => {
                                 Icon={FiMail}
                                 iconSize={16}
                                 name="email"
+                                autoComplete="email"
                                 placeholder="E-mail"
                             />
 
@@ -80,6 +82,7 @@ const SignUp : React.FC = () => {
                                 iconSize={16}
                                 name="password"
                                 type="password"
+                                autoComplete="new-password"
                                 placeholder="Senha"
                             />
 

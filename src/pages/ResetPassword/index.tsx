@@ -64,6 +64,7 @@ const ResetPassword : React.FC = () => {
                                 iconSize={16}
                                 name="password"
                                 type="password"
+                                autoComplete="new-password"
                                 placeholder="Nova senha"
                             />
 
@@ -72,6 +73,7 @@ const ResetPassword : React.FC = () => {
                                 iconSize={16}
                                 name="passwordConfirmation"
                                 type="password"
+                                autoComplete="new-password"
                                 placeholder="Confirmar senha"
                             />
 

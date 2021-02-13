@@ -124,6 +124,7 @@ const Profile: React.FC = () => {
                             Icon={FiUser}
                             iconSize={16}
                             name="name"
+                            autoComplete="name"
                             placeholder="Nome"
                         />
 
@@ -131,6 +132,7 @@ const Profile: React.FC = () => {
                             Icon={FiMail}
                             iconSize={16}
                             name="email"
+                            autoComplete="email"
                             placeholder="E-mail"
                         />
 
@@ -140,6 +142,7 @@ const Profile: React.FC = () => {
                             name="oldPassword"
                             style={{ marginTop: '24px' }}
                             type="password"
+                            autoComplete="current-password"
                             placeholder="Senha atual"
                         />
 
@@ -148,6 +151,7 @@ const Profile: React.FC = () => {
                             iconSize={16}
                             name="password"
                             type="password"
+                            autoComplete="new-password"
                             placeholder="Nova senha"
                         />
 
@@ -156,6 +160,7 @@ const Profile: React.FC = () => {
                             iconSize={16}
                             name="passwordConfirmation"
                             type="password"
+                            autoComplete="new-password"
                             placeholder="Confirmar senha"
                         />
 
