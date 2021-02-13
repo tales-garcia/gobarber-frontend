@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { AvatarInput, Container, Content } from './styles';
 import { FiArrowLeft, FiCamera, FiLock, FiMail, FiUser } from 'react-icons/fi';
 import Input from '../../components/Input';
@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
 
 const validationSchema = Yup.object().shape({
     name: Yup.string(),
@@ -43,23 +44,46 @@ interface ProfileFormData {
 const Profile: React.FC = () => {
 
     const { createToast } = useToast();
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
 
-    const handleSubmit = useCallback(async ({ email, password }: ProfileFormData) => {
+    const handleSubmit = useCallback(async (_: ProfileFormData) => {
         try {
 
             createToast({
-                title: 'Logon realizado com sucesso!',
+                title: 'Alteração de dados realizada com sucesso!',
                 type: 'success'
             });
         } catch (e) {
             createToast({
                 title: 'Ocorreu um erro',
-                description: 'Não foi possível realizar login na aplicação',
+                description: 'Não foi alterar seus dados na aplicação',
                 type: 'error'
             });
         }
     }, [createToast]);
+
+    const handleAvatarChange = React.useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) return;
+
+        const data = new FormData();
+
+        data.append('avatar', e.target.files[0]);
+
+        await api.patch('/users/avatar', data)
+            .then(res => {
+                console.log(res.data);
+                updateUser(res.data);
+                createToast({
+                    title: 'Avatar alterado com sucesso!',
+                    type: 'success'
+                });
+            })
+            .catch(() => createToast({
+                title: 'Ocorreu um erro',
+                description: 'Ocorreu um erro ao tentar alterar seu avatar, tente de novo.',
+                type: 'error'
+            }));
+    }, [updateUser, createToast]);
 
     return (
         <Container>
@@ -88,9 +112,10 @@ const Profile: React.FC = () => {
                                 src={user.avatarUrl}
                                 alt={user.name}
                             />
-                            <button type="button">
+                            <label htmlFor="avatar">
                                 <FiCamera />
-                            </button>
+                                <input onChange={handleAvatarChange} type="file" name="avatar" id="avatar" />
+                            </label>
                         </AvatarInput>
 
                         <h1>Meu perfil</h1>
