@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     iconSize?: number;
 }
 
-const Input: React.FC<InputProps> = ({ Icon, iconSize, name, ...rest }) => {
+const Input: React.FC<InputProps> = ({ Icon, style, iconSize, name, ...rest }) => {
     let inputRef = useRef<HTMLInputElement>(null);
     const [, { error, touched }] = useField(name);
 
@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({ Icon, iconSize, name, ...rest }) => {
     }, []);
 
     return (
-        <InputBlock hasError={hasError} isFilled={isFilled}>
+        <InputBlock style={style} hasError={hasError} isFilled={isFilled}>
             {Icon && <Icon size={iconSize || 16} />}
             <Field
                 innerRef={inputRef}
