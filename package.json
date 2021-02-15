@@ -30,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --watchAll false",
     "eject": "react-scripts eject",
     "commit": "cz"
   },
@@ -38,6 +38,14 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/*.tsx",
+      "!src/hooks/index.tsx"
     ]
   },
   "browserslist": {
@@ -53,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^5.0.3",
     "@types/date-fns": "^2.6.0",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",
